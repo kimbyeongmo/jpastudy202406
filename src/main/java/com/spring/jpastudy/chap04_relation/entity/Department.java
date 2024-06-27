@@ -1,6 +1,7 @@
 package com.spring.jpastudy.chap04_relation.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class Department {
             * ALL : 위의 내용을 전부 포함
      */
     @OneToMany(mappedBy = "department",
+            fetch = FetchType.LAZY,
             orphanRemoval = true,
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Employee> employees = new ArrayList<>();
