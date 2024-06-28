@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface IdolRepository extends JpaRepository<Idol, Long>, IdolCustomRepository {
+public interface IdolRepository
+        extends JpaRepository<Idol, Long>, IdolCustomRepository {
 
     @Query("SELECT i FROM Idol i ORDER BY i.age DESC")
     List<Idol> findAllBySorted();
