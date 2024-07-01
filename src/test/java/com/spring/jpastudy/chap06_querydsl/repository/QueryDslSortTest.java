@@ -60,7 +60,6 @@ class QueryDslSortTest {
     }
 
 
-
     @Test
     @DisplayName("QueryDSL로 기본 정렬하기")
     void sortingTest() {
@@ -135,6 +134,7 @@ class QueryDslSortTest {
         pagedIdols.getContent().forEach(System.out::println);
         System.out.println("\n\n\n");
     }
+
 
     @Test
     @DisplayName("이름 오름차순 정렬 조회")

@@ -118,10 +118,12 @@ class QueryDslGroupingTest {
         System.out.println("\n\n");
     }
 
+
     @Test
     @DisplayName("연령대별로 그룹화하여 아이돌 수를 조회")
-    void ageGroupTest(){
-         /*
+    void ageGroupTest() {
+
+        /*
             SELECT
                 CASE age WHEN BETWEEN 10 AND 19 THEN 10
                 CASE age WHEN BETWEEN 20 AND 29 THEN 20
@@ -134,9 +136,10 @@ class QueryDslGroupingTest {
                 CASE age WHEN BETWEEN 20 AND 29 THEN 20
                 CASE age WHEN BETWEEN 30 AND 39 THEN 30
                 END
+
          */
 
-        // given
+        //given
 
         // QueryDSL로 CASE WHEN THEN 표현식 만들기
         NumberExpression<Integer> ageGroupExpression = new CaseBuilder()
@@ -145,7 +148,7 @@ class QueryDslGroupingTest {
                 .when(idol.age.between(30, 39)).then(30)
                 .otherwise(0);
 
-        // when
+        //when
         List<Tuple> result = factory
                 .select(ageGroupExpression, idol.count())
                 .from(idol)
@@ -153,7 +156,7 @@ class QueryDslGroupingTest {
                 .having(idol.count().gt(5))
                 .fetch();
 
-        // then
+        //then
         assertFalse(result.isEmpty());
         for (Tuple tuple : result) {
             int ageGroupValue = tuple.get(ageGroupExpression);
@@ -163,10 +166,11 @@ class QueryDslGroupingTest {
         }
     }
 
+
+    @DisplayName("그룹별 평균 나이 조회")
     @Test
-    @DisplayName("아이돌 그룹별로 아이돌의 그룹명과 평균 나이를 조회하세요." +
-            " 평균 나이가 20세와 25세 사이인 그룹만 조회합니다.")
-    void groupAverageAgeTest(){
+    void groupAverageAgeTest() {
+
         /*
             SELECT G.group_name, AVG(I.age)
             FROM tbl_idol I
@@ -180,24 +184,24 @@ class QueryDslGroupingTest {
                 .select(idol.group.groupName, idol.age.avg())
                 .from(idol)
                 .groupBy(idol.group)
-                .having(idol.age.avg().between(20,25))
+                .having(idol.age.avg().between(20, 25))
                 .fetch();
 
-        // then
+        //then
         assertFalse(result.isEmpty());
         for (Tuple tuple : result) {
             String groupName = tuple.get(idol.group.groupName);
             double averageAge = tuple.get(idol.age.avg());
 
-            System.out.println("\n\nGroup: " + groupName + ", Average Age: " + averageAge);
+            System.out.println("\n\nGroup: " + groupName
+                    + ", Average Age: " + averageAge);
         }
     }
 
+    @DisplayName("그룹별 평균 나이 조회 (결과 DTO 처리)")
     @Test
-    @DisplayName("아이돌 그룹별로 아이돌의 그룹명과 평균 나이를 조회하세요." +
-            " 평균 나이가 20세와 25세 사이인 그룹만 조회합니다." +
-            "결과 DTO 처리")
-    void groupAverageAgeDtoTest(){
+    void groupAverageAgeDtoTest() {
+
         /*
             SELECT G.group_name, AVG(I.age)
             FROM tbl_idol I
@@ -218,19 +222,19 @@ class QueryDslGroupingTest {
                 )
                 .from(idol)
                 .groupBy(idol.group)
-                .having(idol.age.avg().between(20,25))
+                .having(idol.age.avg().between(20, 25))
                 .fetch();
 
-        // then
+        //then
         assertFalse(result.isEmpty());
         for (GroupAverageAgeDto dto : result) {
             String groupName = dto.getGroupName();
             double averageAge = dto.getAverageAge();
 
-            System.out.println("\n\nGroup: " + groupName + ", Average Age: " + averageAge);
+            System.out.println("\n\nGroup: " + groupName
+                    + ", Average Age: " + averageAge);
         }
     }
-
 
 
 

@@ -12,4 +12,5 @@ public class GroupAverageAgeDto {
 
     private String groupName;
     private double averageAge;
+
 }
