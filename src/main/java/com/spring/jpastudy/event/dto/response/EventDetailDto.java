@@ -1,4 +1,4 @@
-package com.spring.jpastudy.event.dto.request.response;
+package com.spring.jpastudy.event.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
